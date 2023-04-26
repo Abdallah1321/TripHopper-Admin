@@ -1,20 +1,20 @@
 /* google font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
 /* layout */
 :root {
   --primary: #1aac83;
   --error: #e7195a;
 }
+
 .lPage {
   background: #f1f1f1;
   margin: 0;
   font-family: "Poppins";
 }
+
 header {
   background: #fff;
 }
-
 
 .loginTitle {
   text-align: center;
@@ -29,6 +29,7 @@ header {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
 .lButton {
   background: var(--primary);
   border: 0;
@@ -38,6 +39,7 @@ header {
   border-radius: 4px;
   cursor: pointer;
 }
+
 div.error {
   padding: 10px;
   background: #ffefef;
@@ -46,10 +48,10 @@ div.error {
   border-radius: 4px;
   margin: 20px 0;
 }
+
 input.error {
   border: 1px solid var(--error);
 }
-
 
 /* auth forms */
 form.signup, form.login {
@@ -58,4 +60,4 @@ form.signup, form.login {
   padding: 20px;
   background: #fff;
   border-radius: 4px;
-}
+}/*# sourceMappingURL=login.css.map */
