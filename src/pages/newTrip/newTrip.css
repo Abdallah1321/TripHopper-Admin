@@ -33,14 +33,22 @@
 .new .newContainer .top .right,
 .new .newContainer .bottom .right {
   flex: 2;
-  padding: 0px 20px;
 }
 .new .newContainer .top .right form,
 .new .newContainer .bottom .right form {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+.new .newContainer .top .right form .selectTables,
+.new .newContainer .bottom .right form .selectTables {
+  width: 100%;
+}
+.new .newContainer .top .right form .selectTables select,
+.new .newContainer .bottom .right form .selectTables select {
+  width: 100%;
+  padding: 10px;
 }
 .new .newContainer .top .right form .formInput,
 .new .newContainer .bottom .right form .formInput {
@@ -73,4 +81,4 @@
   font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
-}/*# sourceMappingURL=new.css.map */
+}/*# sourceMappingURL=newTrip.css.map */

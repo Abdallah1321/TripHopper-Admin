@@ -1,19 +1,29 @@
-import "./new.scss";
+import "./newTrip.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { BASE_URL } from "../../utils/config";
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { tripInputs } from "../../formSource";
+import { BASE_URL } from "../../utils/config";
+import useFetch from "../../hooks/useFetch";
+import axios from "axios";
 
-const New = ({ inputs, title }) => {
+const NewRestaurant = () => {
   const [file, setFile] = useState("");
   const [info, setInfo] = useState({});
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
   };
 
   const handleClick = async (e) => {
@@ -29,27 +39,27 @@ const New = ({ inputs, title }) => {
 
       const { url } = uploadRes.data;
 
-      await axios.post(`${BASE_URL}/auth/register`, {
+      const newTrip = {
         ...info,
-        img: url,
-      });
-      navigate("/users");
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
+        photo: url,
+      };
+
+      await axios.post(`${BASE_URL}/trips`, newTrip, config);
+      navigate("/trips");
+    } catch (err) {}
+  };
   return (
     <div className="new">
       <Sidebar />
       <div className="newContainer">
         <Navbar />
         <div className="top">
-          <h1>{title}</h1>
+          <h1>Add New Trip</h1>
         </div>
         <div className="bottom">
           <div className="left">
-            <img
+          <img
               src={
                 file
                   ? URL.createObjectURL(file)
@@ -72,24 +82,17 @@ const New = ({ inputs, title }) => {
                 />
               </div>
 
-              {inputs.map((input) => (
+              {tripInputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
                   <input
-                    onChange={handleChange}
                     type={input.type}
                     placeholder={input.placeholder}
                     id={input.id}
+                    onChange={handleChange}
                   />
                 </div>
               ))}
-              <div className="formInput">
-                <label>Is Admin?</label>
-                <select id="isAdmin" onChange={handleChange}>
-                  <option value={false}>No</option>
-                  <option value={true}>Yes</option>
-                </select>
-              </div>
               <button onClick={handleClick}>Send</button>
             </form>
           </div>
@@ -99,4 +102,4 @@ const New = ({ inputs, title }) => {
   );
 };
 
-export default New;
+export default NewRestaurant;

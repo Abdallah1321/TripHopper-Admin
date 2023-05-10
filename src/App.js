@@ -4,29 +4,35 @@ import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { productInputs, userInputs } from "./formSource";
+import { tripInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { useAuthContext } from "./hooks/useAuthContext";
+import { tripColumns, userColumns } from "./datatablesource";
+import NewTrip from "./pages/newTrip/NewTrip";
+
+
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
-  const ProtectedRoute = ({ children }) => {
-    const { user } = useAuthContext();
+    const ProtectedRoute = ({ children }) => {
+      const { user } = useAuthContext();
 
-    if (!user) {
-      return <Navigate to="/login" />;
-    }
+      if (!user) {
+        return <Navigate to="/login" />;
+      }
 
-    return children;
-  };
+      return children;
+    };
+
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
+            <Route path="login" element={<Login />} />
             <Route
               index
               element={
@@ -35,13 +41,13 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="login" element={<Login />} />
+
             <Route path="users">
               <Route
                 index
                 element={
                   <ProtectedRoute>
-                    <List />
+                    <List columns={userColumns} />
                   </ProtectedRoute>
                 }
               />
@@ -62,17 +68,17 @@ function App() {
                 }
               />
             </Route>
-            <Route path="products">
+            <Route path="trips">
               <Route
                 index
                 element={
                   <ProtectedRoute>
-                    <List />
+                    <List columns={tripColumns} />
                   </ProtectedRoute>
                 }
               />
               <Route
-                path=":productId"
+                path=":tripId"
                 element={
                   <ProtectedRoute>
                     <Single />
@@ -83,7 +89,7 @@ function App() {
                 path="new"
                 element={
                   <ProtectedRoute>
-                    <New inputs={productInputs} title="Add New Trip" />
+                    <NewTrip inputs={tripInputs} title="Add New Trip"/>
                   </ProtectedRoute>
                 }
               />
