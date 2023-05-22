@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/config";
+import { BASE_URL, CLIENTID, SECRETKEY} from "../utils/config";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);

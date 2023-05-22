@@ -5,7 +5,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tripInputs } from "../../formSource";
-import { BASE_URL } from "../../utils/config";
+import { BASE_URL, CLIENTID, SECRETKEY } from "../../utils/config";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
@@ -22,6 +22,8 @@ const NewRestaurant = () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
+      clientId: CLIENTID,
+      secret: SECRETKEY,
     },
     withCredentials: true,
   };
@@ -59,7 +61,7 @@ const NewRestaurant = () => {
         </div>
         <div className="bottom">
           <div className="left">
-          <img
+            <img
               src={
                 file
                   ? URL.createObjectURL(file)

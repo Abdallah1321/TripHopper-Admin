@@ -6,12 +6,14 @@ import axios from "axios";
 
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../utils/config";
+import { BASE_URL, CLIENTID, SECRETKEY } from "../../utils/config";
 
 const Datatable = ({ columns }) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
+      clientId: CLIENTID,
+      secret: SECRETKEY,
     },
     withCredentials: true,
   };

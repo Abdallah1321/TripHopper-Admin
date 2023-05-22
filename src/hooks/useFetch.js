@@ -1,39 +1,69 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import { BASE_URL, CLIENTID, SECRETKEY } from "../utils/config";
 
-const useFetch = (url) => {
+
+const useFetch = url => {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [oauthKey, setOauthKey] = useState(null);
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    const fetchOauthKey = async () => {
       try {
-        const res = await axios.get(url, {
-          withCredentials: true,
+        const response = await fetch(`${BASE_URL}/oauth/key`, {
+          headers: {
+            clientId: CLIENTID,
+            secret: SECRETKEY,
+          },
         });
-        setData(res.data.data);
+
+        const result = await response.json();
+        setOauthKey(result.key);
       } catch (err) {
-        setError(err);
+        setError(err.message);
       }
-      setLoading(false);
     };
+    fetchOauthKey();
+  }, [CLIENTID, SECRETKEY]);
+
+    useEffect(() => {
+    const fetchData = async () => {
+      if (!oauthKey) {
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch(url, {
+          headers: {
+            key: oauthKey,
+          },
+        });
+
+        if (!response.ok) {
+          setError("Failed to fetch");
+        }
+
+        const result = await response.json();
+        setData(result.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
     fetchData();
-  }, [url]);
+  }, [url, oauthKey]);
 
-  const reFetch = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(url);
-      setData(res.data);
-    } catch (err) {
-      setError(err);
-    }
-    setLoading(false);
+  return {
+    data,
+    error,
+    loading,
   };
-
-  return { data, loading, error, reFetch };
 };
 
 export default useFetch;

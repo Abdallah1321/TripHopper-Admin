@@ -2,7 +2,7 @@ import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { BASE_URL } from "../../utils/config";
+import { BASE_URL, CLIENTID, SECRETKEY } from "../../utils/config";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +30,10 @@ const New = ({ inputs, title }) => {
       const { url } = uploadRes.data;
 
       await axios.post(`${BASE_URL}/auth/register`, {
+        headers: {
+          clientId: CLIENTID,
+          secret: SECRETKEY,
+        },
         ...info,
         img: url,
       });
