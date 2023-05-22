@@ -23,13 +23,13 @@ const Datatable = ({ columns }) => {
 
   const [list, setList] = useState();
 
-  const { data, loading, error } = useFetch(`${BASE_URL}/${path}/`);
+  const { data, loading, error } = useFetch(`${BASE_URL}/${path}`);
 
   useEffect(() => {
-    if (Array.isArray(data)) {
-      setList(data);
-    }
+    setList(data);
   }, [data]);
+
+  console.log(data)
 
   const handleDelete = async (id) => {
     try {

@@ -2,7 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL, CLIENTID, SECRETKEY} from "../utils/config";
+import { BASE_URL, CLIENTID, SECRETKEY } from "../utils/config";
+import Cookies from "js-cookie";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -34,6 +35,8 @@ export const useLogin = () => {
         throw new Error(user.error);
       }
 
+      // save token to a cookie
+      Cookies.set("accessToken", user.token);
       // save user to local storage
       localStorage.setItem("user", JSON.stringify(user));
 

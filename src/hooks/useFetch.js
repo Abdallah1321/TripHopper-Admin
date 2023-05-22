@@ -48,6 +48,8 @@ const useFetch = url => {
         }
 
         const result = await response.json();
+        console.log("RESULTTT")
+        console.log(result)
         setData(result.data);
         setLoading(false);
       } catch (err) {
